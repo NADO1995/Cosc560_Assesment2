@@ -1,237 +1,212 @@
+# COSC560 Assessment 3 Laravel Backend
 
+GitHub Repository:
 
-## COSC560 – Assignment 2
-
-**GitHub Repository:**
 https://github.com/NADO1995/Cosc560_Assesment2
 
-**Student Name:** Tshering Dorji
-**Student ID:** 220292677
+Student Name: Tshering Dorji  
+Student ID: 220292677
 
----
+## About
 
-## Project Overview
+This project is the Laravel backend for COSC560 Assessment 3.
 
-This project is a Laravel Admin Panel Application developed for COSC560 Assignment 2. The application allows an admin user to manage posts and categories.
+It is an extension of my Assessment 2 Laravel application. For Assessment 3, I created a new Git branch called `assessment3` and added Laravel Sanctum API authentication and API endpoints for the React TypeScript frontend.
 
-The project extends the Laravel CRUD concepts by adding authentication, admin access control, Eloquent relationships, route model binding, factories and seeders, and a custom 404 page.
+The backend provides API functions to:
 
----
-
-## Features
-
-* Laravel authentication
-* Admin-only access
-* Post CRUD operations
-* Category CRUD operations
-* Post and Category relationship
-* Post and User relationship
-* Route model binding
-* Form validation
-* Factories and seeders
-* Custom 404 page
-* Fallback route
-* Bootstrap interface
-
----
+- View all posts
+- View one post
+- Create a post
+- Edit a post
+- Delete a post
 
 ## Technologies Used
 
-* PHP
-* Laravel
-* MySQL
-* XAMPP
-* Blade Templates
-* Bootstrap
-* Composer
-* Git
-* GitHub
-* Visual Studio Code
+- PHP
+- Laravel
+- Laravel Sanctum
+- MySQL
+- XAMPP
+- Composer
+- Git
+- GitHub
+- Visual Studio Code
+- Postman
 
----
+## Database
 
-## Authentication
+Database name:
 
-The application contains two types of users:
+```text
+2026_UNE_COSC560_TsheringDorji
+```
+
+The database contains users, categories, posts and personal access tokens.
+
+Seeded users are included for testing.
 
 ### Admin User
 
-Email: [admin@example.com](mailto:admin@example.com)
-Password: password
+Email:
 
-The admin user can log in and access the admin panel.
+```text
+admin@example.com
+```
+
+Password:
+
+```text
+password
+```
 
 ### Normal User
 
-Email: [user@example.com](mailto:user@example.com)
-Password: password
+Email:
 
-The normal user is restricted from accessing the admin application.
+```text
+user@example.com
+```
 
-An `AdminMiddleware` is used to check the user type and protect the admin routes.
+Password:
 
----
+```text
+password
+```
 
-## Posts
+## Laravel Sanctum
 
-The admin user can perform the following operations:
+Laravel Sanctum is used to protect the API routes.
 
-* Create a post
-* View posts
-* Edit a post
-* Delete a post
+The admin user can log in through the API and receive an authentication token.
 
-Each post contains:
+The token is sent in the Authorization header when the React frontend communicates with the Laravel backend.
 
-* Title
-* Content
-* User
-* Category
-* Active status
+## API Endpoints
 
-When creating or editing a post, the admin can select a category from the available categories.
+The following API endpoints are available:
 
----
+```text
+GET /api/posts
+```
 
-## Categories
+Returns all posts.
 
-The admin user can also manage categories.
+```text
+GET /api/posts/{id}
+```
 
-The following operations are available:
+Returns one post.
 
-* Create a category
-* View categories
-* Edit a category
-* Delete a category
+```text
+POST /api/posts
+```
 
-Each category contains a name and content.
+Creates a new post.
 
----
+```text
+PUT /api/posts/{id}
+```
 
-## Database Relationships
+Updates an existing post.
 
-Eloquent relationships are used between the models.
+```text
+DELETE /api/posts/{id}
+```
 
-### Post Model
+Deletes a post.
 
-A Post belongs to a Category.
+The login endpoint is:
 
-A Post belongs to a User.
-
-### Category Model
-
-A Category has many Posts.
-
-Foreign keys are used in the posts table to connect posts with users and categories.
-
----
-
-## Factories and Seeders
-
-Factories and seeders are used to generate sample data for testing.
-
-The database contains:
-
-* 2 users
-* 5 categories
-* 10 posts
-
-The two users include one admin user and one normal user.
-
----
-
-## Route Model Binding
-
-Route model binding is used for both Posts and Categories.
-
-This allows Laravel to automatically find the correct Post or Category when viewing, editing, updating or deleting a record.
-
----
-
-## Custom 404 Page
-
-A custom 404 page was created for invalid URLs.
-
-A fallback route displays the custom Page Not Found screen when a requested route does not exist.
-
-The page also contains a button that allows the user to return to the admin section.
-
----
+```text
+POST /api/login
+```
 
 ## Validation
 
-Validation is used when creating and updating posts and categories.
+Validation is used when creating and updating posts.
 
-For Posts:
+Post fields include:
 
-* Title is required and limited to 50 characters
-* Content is required
-* Category is required
-* Active status must be Yes or No
+- Title
+- Content
+- Category
+- Active status
 
-For Categories:
+## How to Run
 
-* Name is required and limited to 50 characters
-* Content is required
+1. Open the Laravel project in VS Code.
 
----
+2. Start MySQL in XAMPP.
+
+3. Open the terminal.
+
+4. Install PHP dependencies if required:
+
+```bash
+composer install
+```
+
+5. Make sure the `.env` file contains the correct database settings.
+
+Example:
+
+```text
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=2026_UNE_COSC560_TsheringDorji
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+6. Run the database migrations and seeders:
+
+```bash
+php artisan migrate --seed
+```
+
+7. Start the Laravel server:
+
+```bash
+php artisan serve
+```
+
+The Laravel backend should run at:
+
+```text
+http://127.0.0.1:8000
+```
 
 ## Testing
 
-The application was manually tested in the browser.
+The API endpoints were tested using Postman.
 
-The following functions were tested:
+The following functions were tested successfully:
 
-* Admin login
-* Normal user access restriction
-* Create Post
-* View Post
-* Edit Post
-* Delete Post
-* Create Category
-* View Category
-* Edit Category
-* Delete Category
-* Category selection for posts
-* Route model binding
-* Custom 404 page
-* Fallback route
+- Get all posts
+- Get one post
+- Create post
+- Update post
+- Delete post
+- Sanctum login and authentication
 
-The admin user was able to access the admin panel successfully, while the normal user was restricted from accessing the application.
-
----
+The React frontend was also tested with the Laravel backend.
 
 ## Approach
 
-I started by setting up the Laravel project and database. I created the required migrations, models, factories and seeders for users, posts and categories.
+I continued from my Assessment 2 Laravel project and created a new branch for Assessment 3.
 
-After setting up the database, I created the controllers and Blade views for managing posts and categories. I then added the relationships between Post, Category and User.
+I installed Laravel Sanctum and added API authentication. I then created API routes and controller functions for viewing, creating, updating and deleting posts.
 
-Laravel authentication was used for login functionality. I created admin middleware to restrict the admin section so that only the admin user can access it.
+After creating the API, I tested each endpoint using Postman. I then connected the Laravel backend to the React TypeScript frontend using the Fetch API and Sanctum token authentication.
 
-Finally, I added route model binding and a custom fallback page and manually tested the application.
+## Challenges
 
----
+One challenge was setting up Sanctum authentication correctly and making sure protected API routes accepted the token.
 
-## Challenges Faced
+Another challenge was connecting the React frontend to the Laravel API and making sure the correct token was included in the Authorization header.
 
-One of the challenges was restricting access so that only the admin user could access the admin section. This was solved by creating `AdminMiddleware` and checking the user type.
+I also had to check the database connection and make sure the correct database name and seeded users were available.
 
-Another challenge was correctly connecting posts with categories and users. This was solved by using foreign keys in the posts table and Eloquent relationships in the models.
-
-I also had to make sure route model binding worked correctly for both posts and categories. Testing each CRUD operation helped identify and fix issues during development.
-
----
-## Login Details
-
-### Admin User
-Email: admin@example.com
-Password: password
-
-### Normal User
-Email: user@example.com
-Password: password
-
-The admin user can log in and access the admin panel.
-
-The normal user is included for testing the access restriction and should not be able to log in to the admin application.
+Testing the API with Postman helped me find and fix these issues.
