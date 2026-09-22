@@ -7,6 +7,12 @@ use App\Http\Controllers\Api\PostController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/token-test', function (Request $request) {
+    return response()->json([
+        'bearer_token_received' => $request->bearerToken() !== null
+    ]);
+});
+
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/user', function (Request $request) {
